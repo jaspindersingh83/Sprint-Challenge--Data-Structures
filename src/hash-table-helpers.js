@@ -56,12 +56,12 @@ class Linkedlist {
     this.tail = null;
   }
 
-  addtotail(key,value) {
+  addtotail(key, value) {
     const newnode = {};
     newnode[key] = value;
     newnode.next = null;
     if (!this.head) {
-      this.head = newnode; 
+      this.head = newnode;
       this.tail = newnode;
     } else {
       this.tail.next = newnode;
@@ -74,13 +74,14 @@ class Linkedlist {
     }
     const removed = this.head;
     this.head = this.head.next;
+    delete removed.next;
     return removed;
   }
+}
 
 
 module.exports = {
   LimitedArray,
   getIndexBelowMax,
 };
-
 
