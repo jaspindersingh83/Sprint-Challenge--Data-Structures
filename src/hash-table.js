@@ -94,9 +94,10 @@ class HashTable {
     this.storage = new LimitedArray(this.limit);
     oldStorage.each((bucket) => {
       if (!bucket) return;
-      bucket.forEach((pair) => {
-        this.insert(pair[0], pair[1]);
-      });
+      while (!(bucket.head === null)) {
+        const removed = bucket.removehead();
+        this.insert(Object.entries(removed)[0][0], Object.entries(removed)[0][1]);
+      }
     });
   }
 
@@ -121,7 +122,7 @@ class HashTable {
     while (!(bucket.head === null)) {
       const removed = bucket.removehead();
       if (!(key in removed)) {
-        newbucket.addtotail(Object.entries(removed)[0], Object.entries(removed)[1]);
+        newbucket.addtotail(Object.entries(removed)[0][0], Object.entries(removed)[0][1]);
       }
     }
     this.storage.set(index, newbucket);
@@ -137,7 +138,7 @@ class HashTable {
     while (!(bucket.head === null)) {
       const removed = bucket.removehead();
       if (!(key in removed)) {
-        newbucket.addtotail(Object.entries(removed)[0], Object.entries(removed)[1]);
+        newbucket.addtotail(Object.entries(removed)[0][0], Object.entries(removed)[0][1]);
       }
     }
     this.storage.set(index, newbucket);
@@ -156,7 +157,7 @@ class HashTable {
       if (key in removed) {
         retrieved = removed[key];
       }
-      newbucket.addtotail(Object.entries(removed)[0], Object.entries(removed)[1]);
+      newbucket.addtotail(Object.entries(removed)[0][0], Object.entries(removed)[0][1]);
     }
     this.storage.set(index, newbucket);
     return retrieved;
